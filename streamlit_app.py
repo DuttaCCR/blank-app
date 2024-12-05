@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
-import matplotlib.pyplot as plt
+import matplotlib
+from matplotlib import pyplot as plt
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 import threading
