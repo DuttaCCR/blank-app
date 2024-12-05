@@ -3,7 +3,6 @@ import pandas as pd
 # import matplotlib.pyplot as plt
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
-import threading
 import os
 import glob
 import atexit
