@@ -1,7 +1,6 @@
 import streamlit as st
 import pandas as pd
-import matplotlib
-from matplotlib import pyplot as plt
+# import matplotlib.pyplot as plt
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 import threading
@@ -129,58 +128,58 @@ else:
 
     filtered_df = dynamic_filters.filter_df()
 
-    # Group and calculate percentages on the filtered DataFrame
-    category_counts = filtered_df.groupby(['Q1', 'source_file']).size().unstack(fill_value=0)
+    # # Group and calculate percentages on the filtered DataFrame
+    # category_counts = filtered_df.groupby(['Q1', 'source_file']).size().unstack(fill_value=0)
 
-    # Calculate percentages for each source file
-    category_percentages = category_counts.div(category_counts.sum(axis=0), axis=1) * 100
+    # # Calculate percentages for each source file
+    # category_percentages = category_counts.div(category_counts.sum(axis=0), axis=1) * 100
 
-        # Define your custom order for the categories'Saw a floor model at a show', 'Online', 'Friend or family member recommended them', , 'Saw a floor model at a show'
-    custom_order = ['All other', 'Previous ownership, experience, knowledge', 'Article in trade magazine', 'Research, shopping', 'Sponsorship of event', 'Saw a floor model at a show', 'Online', 'Friend or family member recommended them', 'Dealer signage and displayed product', 'Advertisements (TV, Print, Radio or Web)']
+    #     # Define your custom order for the categories'Saw a floor model at a show', 'Online', 'Friend or family member recommended them', , 'Saw a floor model at a show'
+    # custom_order = ['All other', 'Previous ownership, experience, knowledge', 'Article in trade magazine', 'Research, shopping', 'Sponsorship of event', 'Saw a floor model at a show', 'Online', 'Friend or family member recommended them', 'Dealer signage and displayed product', 'Advertisements (TV, Print, Radio or Web)']
 
-    # Ensure the categories are in the custom order
-    category_percentages = category_percentages.reindex(custom_order)
+    # # Ensure the categories are in the custom order
+    # category_percentages = category_percentages.reindex(custom_order)
 
-    # Plotting the clustered bar chart with custom order
-    plt.figure(figsize=(12, 8))
-    width = 0.2  # Adjust bar width for multiple files
-    positions = list(range(len(category_percentages.index)))
+    # # Plotting the clustered bar chart with custom order
+    # plt.figure(figsize=(12, 8))
+    # width = 0.2  # Adjust bar width for multiple files
+    # positions = list(range(len(category_percentages.index)))
 
-    for i, col in enumerate(category_percentages.columns):
-        bars = plt.barh(
-            [pos + i * width for pos in positions],
-            category_percentages[col],
-            height=width,
-            label=col
-        )
-        for bar in bars:
-            plt.text(
-                bar.get_width() + 0.5,
-                bar.get_y() + bar.get_height() / 2,
-                f'{bar.get_width():.1f}%',
-                va='center',
-                ha='left'
-            )
+    # for i, col in enumerate(category_percentages.columns):
+    #     bars = plt.barh(
+    #         [pos + i * width for pos in positions],
+    #         category_percentages[col],
+    #         height=width,
+    #         label=col
+    #     )
+    #     for bar in bars:
+    #         plt.text(
+    #             bar.get_width() + 0.5,
+    #             bar.get_y() + bar.get_height() / 2,
+    #             f'{bar.get_width():.1f}%',
+    #             va='center',
+    #             ha='left'
+    #         )
 
-    plt.xticks(
-        []
-    )
-    plt.ylabel('')
-    plt.title('')
-    plt.yticks(
-        [pos + (width * len(category_percentages.columns)) / 2 for pos in positions],
-        category_percentages.index
-    )
-    plt.legend(title="Source File")
+    # plt.xticks(
+    #     []
+    # )
+    # plt.ylabel('')
+    # plt.title('')
+    # plt.yticks(
+    #     [pos + (width * len(category_percentages.columns)) / 2 for pos in positions],
+    #     category_percentages.index
+    # )
+    # plt.legend(title="Source File")
 
-    plt.tight_layout()
-    ax = plt.gca()  # Get current axes
-    ax.grid(False)  # Turn off all gridlines
-    ax.spines['top'].set_visible(False)  # Hide the top spine
-    ax.spines['right'].set_visible(False)  # Hide the right spine
-    ax.spines['left'].set_visible(True)  # Hide the left spine
-    ax.spines['bottom'].set_visible(False)  # Hide the left spine
-    st.pyplot(plt)
+    # plt.tight_layout()
+    # ax = plt.gca()  # Get current axes
+    # ax.grid(False)  # Turn off all gridlines
+    # ax.spines['top'].set_visible(False)  # Hide the top spine
+    # ax.spines['right'].set_visible(False)  # Hide the right spine
+    # ax.spines['left'].set_visible(True)  # Hide the left spine
+    # ax.spines['bottom'].set_visible(False)  # Hide the left spine
+    # st.pyplot(plt)
 
 # # -------------------------------------------------------------------------------------------------------------
 
