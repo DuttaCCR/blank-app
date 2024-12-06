@@ -4,8 +4,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
-import os
-import glob
 import atexit
 from streamlit_dynamic_filters import DynamicFilters
 
@@ -40,9 +38,13 @@ def start_watchdog(directory, callback):
 # Streamlit App
 # st.header("How did you originally become aware of ROXOR?")
 
-# Directory to watch
-current_directory = os.path.dirname(os.path.abspath(__file__))  # Current script's directory
-watch_directory = os.path.join(current_directory, "Quarters")  # Path to "Quarters" folder
+# # Directory to watch
+# current_directory = os.path.dirname(os.path.abspath(__file__))  # Current script's directory
+# watch_directory = os.path.join(current_directory, "Quarters")  # Path to "Quarters" folder
+
+# Get the current script's directory
+current_directory = Path(__file__).resolve().parent
+watch_directory = current_directory / "Quarters"
 
 # Start Watchdog
 if "watchdog_started" not in st.session_state:
@@ -51,15 +53,27 @@ if "watchdog_started" not in st.session_state:
 
 # Function to load all .sav files dynamically
 def load_all_sav_files(directory):
-    sav_files = glob.glob(os.path.join(directory, "*.sav"))  # Find all .sav files in the "Quarters" folder
+    # Convert the directory to a Path object
+    directory = Path(directory)
+    
+    # Find all .sav files in the directory
+    sav_files = list(directory.glob("*.sav"))
+    
     dataframes = []
     for file in sav_files:
         try:
+            # Load .sav file into a DataFrame
             df = pd.read_spss(file)
-            df['source_file'] = os.path.basename(file)  # Add a column to track the file source
+            
+            # Add a column to track the file source
+            df['source_file'] = file.name  # file.name gives the basename of the file
+            
+            # Append the DataFrame to the list
             dataframes.append(df)
         except Exception as e:
             st.warning(f"Error loading file {file}: {e}")
+    
+    # Concatenate all DataFrames if any are loaded; otherwise return an empty DataFrame
     return pd.concat(dataframes) if dataframes else pd.DataFrame()
 
 # Load all .sav files
