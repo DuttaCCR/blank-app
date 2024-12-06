@@ -4,3 +4,4 @@ matplotlib
 watchdog
 pathlib
 streamlit_dynamic_filters
+pyreadstat
