@@ -4,7 +4,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
-import atexit
+# import atexit
 from streamlit_dynamic_filters import DynamicFilters
 
 # Function to trigger a refresh by modifying a session state variable
@@ -1406,10 +1406,10 @@ else:
 #     st.pyplot(plt)
 
 
-# Register cleanup for when the app stops
-@atexit.register
-def cleanup():
-    if "watchdog_started" in st.session_state:
-        observer.stop()
-        observer.join()
-        del st.session_state.watchdog_started
+# # Register cleanup for when the app stops
+# @atexit.register
+# def cleanup():
+#     if "watchdog_started" in st.session_state:
+#         observer.stop()
+#         observer.join()
+#         del st.session_state.watchdog_started
